@@ -1,0 +1,29 @@
+---
+   - name: Create directory
+     file: path={{ project_name_path }} state=directory
+
+   - name: Clone a django project
+     command: "git -C {{ project_name_path }} clone {{ git_url_project }} {{ project_name }}"
+
+   - name: Install project requirements
+     pip:
+        state: latest
+        requirements: "{{ project_name_path }}/{{ project_name }}/requirements.txt"
+        virtualenv: "{{project_name_path}}/env"
+        virtualenv_python: python3
+        virtualenv_command: virtualenv
+
+   - name: Remove Settings File for Django
+     shell: "rm {{ project_name_path }}/{{ project_name }}/{{project_dir}}/{{settings_path}}settings.py"
+
+   - name: Create directory django_logs
+     shell: "mkdir {{ project_name_path }}/{{ project_name }}/django_logs"
+
+   - name: Create Settings File for Django
+     template: src=settings.py.j2 dest={{ project_name_path }}/{{ project_name }}/{{project_dir}}/{{settings_path}}settings.py
+
+   - name: Migrate database
+     shell: "{{project_name_path}}/env/bin/python3 {{ project_name_path }}/{{ project_name }}/{{ project_dir }}/manage.py migrate"
+
+   - name: Get all static files
+     shell: "{{project_name_path}}/env/bin/python3 {{ project_name_path }}/{{ project_name }}/{{ project_dir }}/manage.py collectstatic --noinput"

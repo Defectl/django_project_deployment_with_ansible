@@ -1,0 +1,5 @@
+---
+    project_name_path: < path_to_project >
+    project_name: < project_name >
+    project_dir: < project_dir_name >
+    settings_path: < setting_dir_name/ >
