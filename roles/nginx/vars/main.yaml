@@ -1,0 +1,4 @@
+---
+    hostname: < host_name >
+    root: < path_to_root_dir >
+    domain: < domain_name >

@@ -1,0 +1,22 @@
+server {
+    listen 80;
+    server_name < server_domain_or_public_ip >;
+
+    location /static {
+        autoindex on;
+        alias < path_to_dir_static>;
+    }
+    location /media {
+        autoindex on;
+        alias < path_to_dir_media>;
+    }
+
+    location / {
+	include proxy_params;
+        proxy_pass http://unix:/run/gunicorn.sock;
+    error_page   500 502 503 504  /50x.html;
+    }
+    location = /50x.html {
+         root   /usr/share/nginx/html;
+    }
+} 
