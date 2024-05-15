@@ -1,0 +1,30 @@
+---
+- name: Install mysql
+  apt:
+    name:
+      - mysql-server
+      - default-libmysqlclient-dev
+    state: latest
+    update_cache: yes
+
+- name: Enable and start mysql
+  service: name=mysql enabled=yes state=started
+
+- name: Install mysqlclient
+  pip:
+    name: mysqlclient
+
+- name: Create a new database
+  mysql_db: 
+    name={{ db_name }}
+  become_user: root
+  become: yes
+
+- name: Create user
+  mysql_user: 
+    priv={{ db_name }}.*:ALL
+    name={{ db_user }}
+    password={{ db_password }}
+    state=present
+  become: yes
+  become_user: root

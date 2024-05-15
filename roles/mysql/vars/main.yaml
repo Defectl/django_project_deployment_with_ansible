@@ -1,0 +1,4 @@
+---
+    db_user: < user_name > 
+    db_password: < user_password >
+    db_name: < database_name > 
