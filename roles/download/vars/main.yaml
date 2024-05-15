@@ -1,0 +1,9 @@
+---
+    project_name_path: < path_to_project >
+    project_name: < project_name >
+    project_dir: < project_dir_name >
+    www_dir: < www_dir_name >
+    path_to_media_zip: < path_to_media_zip >
+    media_zip_name: < media_zip_name >
+    path_to_db_data_file: < path_to_db_data_file >
+    db_data_file_name: < db_data_file_name >

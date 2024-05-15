@@ -1,0 +1,24 @@
+---
+- name: Download media
+  copy:
+    src: "{{ path_to_media_zip }}/{{ media_zip_name }}"
+    dest: "{{ project_name_path }}/{{ project_name }}/{{ www_dir }}"
+
+- name: Install unzip
+  apt:
+    name: 
+      - unzip
+
+- name: Unzip media
+  shell: "unzip {{ project_name_path }}/{{ project_name }}/{{ www_dir }}/{{ media_zip_name }} -d {{ project_name_path }}/{{ project_name }}/{{ www_dir }}"
+
+- name: Remove zip
+  shell: "rm {{ project_name_path }}/{{ project_name }}/{{ www_dir }}/{{ media_zip_name }}"
+
+- name: Download data for DB
+  copy:
+    src: "{{ path_to_db_data_file }}/{{ db_data_file_name }}"
+    dest: "{{ project_name_path }}/{{ project_name }}"
+
+- name: Add data for DB
+  shell: "{{project_name_path}}/env/bin/python3 {{ project_name_path }}/{{ project_name }}/{{ project_dir }}/manage.py loaddata {{ project_name_path }}/{{ project_name }}/{{ db_data_file_name }}" 
